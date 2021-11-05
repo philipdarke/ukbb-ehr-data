@@ -1,5 +1,7 @@
 # Blood test results
 # Author: Philip Darke <p.a.darke2@newcastle.ac.uk>
+#
+# Extract blood glucose test results.
 
 library(data.table)
 library(lubridate)

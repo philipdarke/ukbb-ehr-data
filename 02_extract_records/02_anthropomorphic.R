@@ -1,5 +1,7 @@
 # Anthropomorphic features
 # Author: Philip Darke <p.a.darke2@newcastle.ac.uk>
+#
+# Extract height, weight, BMI and waist circumference.
 
 library(data.table)
 library(lubridate)

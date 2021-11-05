@@ -1,4 +1,4 @@
-# Evaluate Leicester score using integrated EHR data
+# Evaluate Leicester score - our algorithm and phenotyping approach
 # Author: Philip Darke <p.a.darke2@newcastle.ac.uk>
 
 # See https://doi.org/10.1111/j.1464-5491.2010.03037.x

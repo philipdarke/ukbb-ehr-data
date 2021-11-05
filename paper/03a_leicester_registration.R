@@ -1,7 +1,5 @@
-# Evaluate Leicester score
+# Evaluate Leicester score - as https://doi.org/10.1111/j.1464-5491.2010.03037.x
 # Author: Philip Darke <p.a.darke2@newcastle.ac.uk>
-
-# See https://doi.org/10.1111/j.1464-5491.2010.03037.x
 
 library(data.table)
 library(lubridate)

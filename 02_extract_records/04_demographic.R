@@ -1,5 +1,7 @@
 # Demographic features
 # Author: Philip Darke <p.a.darke2@newcastle.ac.uk>
+#
+# Extract ethnicity, smoking status and Townsend deprivation.
 
 library(data.table)
 library(lubridate)

@@ -13,7 +13,7 @@ source("setup.R")
 # Fields required to prepare data
 required_fields <- c(31, 52, 53, 40000)
 
-# All fields (COMMENT OUT IF THESE FIELDS ARE UNAVAILABLE)
+# All fields including optional fields (COMMENT OUT IF FIELDS ARE UNAVAILABLE)
 required_fields <- c(
   31, 34, 52, 53, 189, 21000, 40000,  # demographics
   48, 50, 21002,  # anthropomorphic

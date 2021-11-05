@@ -1,7 +1,5 @@
-# Evaluate QDiabetes - replicate approach in https://www.bmj.com/content/359/bmj.j5019
+# Evaluate QDiabetes - as https://www.bmj.com/content/359/bmj.j5019
 # Author: Philip Darke <p.a.darke2@newcastle.ac.uk>
-#
-# See https://www.bmj.com/content/359/bmj.j5019
 
 library(data.table)
 library(lubridate)
