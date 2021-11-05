@@ -1,5 +1,8 @@
 # Extract prescription records
 # Author: Philip Darke <p.a.darke2@newcastle.ac.uk>
+#
+# Estimate periods of prescription for ant-diabetes drugs, anti-hypertensives,
+# steroids, statins and atypical antipsychotics.
 
 library(data.table)
 library(lubridate)
@@ -9,11 +12,13 @@ source("setup.R")
 
 # Load data
 gp_presc <- readRDS(paste0(output_path, "gp_presc.rds"))
-presc_codes <- readRDS(paste0(codeset_path, "primary_care/prescriptions.rds"))
+presc_codes <- readRDS(paste0(codeset_path, "drugs/prescriptions.rds"))
 
 # Diabetes ---------------------------------------------------------------------
 
-diabetes <- lapply(1:length(presc_codes$diabetes), function (i) {
+diabetes_drugs <- names(presc_codes$diabetes)
+diabetes_drugs <- which(diabetes_drugs != "all")
+diabetes <- lapply(diabetes_drugs, function (i) {
   drugs <- presc_codes$diabetes[[i]]
   drug_type <- names(presc_codes$diabetes)[i]
   out <- gp_presc[substr(read_2, 1, 2) %in% drugs$read[str_length(drugs$read) == 2] |
@@ -31,46 +36,46 @@ diabetes <- rbindlist(diabetes)
 
 # Steroids ---------------------------------------------------------------------
 
-steroids <- gp_presc[substr(read_2, 1, 2) %in% presc_codes$steroids$read[str_length(presc_codes$steroids$read) == 2] |
-                       substr(read_2, 1, 3) %in% presc_codes$steroids$read[str_length(presc_codes$steroids$read) == 3] |
-                       substr(read_2, 1, 4) %in% presc_codes$steroids$read[str_length(presc_codes$steroids$read) == 4] |
-                       substr(read_2, 1, 5) %in% presc_codes$steroids$read[str_length(presc_codes$steroids$read) == 5] |
-                       substr(bnf_code, 1, 4) %in% presc_codes$steroids$bnf[str_length(presc_codes$steroids$bnf) == 4] |
-                       substr(bnf_code, 1, 6) %in% presc_codes$steroids$bnf[str_length(presc_codes$steroids$bnf) == 6] |
-                       substr(bnf_code, 1, 7) %in% presc_codes$steroids$bnf[str_length(presc_codes$steroids$bnf) == 7] |
-                       substr(bnf_code, 1, 9) %in% presc_codes$steroids$bnf[str_length(presc_codes$steroids$bnf) == 9] |
-                       substr(bnf_code, 1, 10) %in% presc_codes$steroids$bnf[str_length(presc_codes$steroids$bnf) == 10]]
+steroids <- gp_presc[substr(read_2, 1, 2) %in% presc_codes$steroids$all$read[str_length(presc_codes$steroids$all$read) == 2] |
+                       substr(read_2, 1, 3) %in% presc_codes$steroids$all$read[str_length(presc_codes$steroids$all$read) == 3] |
+                       substr(read_2, 1, 4) %in% presc_codes$steroids$all$read[str_length(presc_codes$steroids$all$read) == 4] |
+                       substr(read_2, 1, 5) %in% presc_codes$steroids$all$read[str_length(presc_codes$steroids$all$read) == 5] |
+                       substr(bnf_code, 1, 4) %in% presc_codes$steroids$all$bnf[str_length(presc_codes$steroids$all$bnf) == 4] |
+                       substr(bnf_code, 1, 6) %in% presc_codes$steroids$all$bnf[str_length(presc_codes$steroids$all$bnf) == 6] |
+                       substr(bnf_code, 1, 7) %in% presc_codes$steroids$all$bnf[str_length(presc_codes$steroids$all$bnf) == 7] |
+                       substr(bnf_code, 1, 9) %in% presc_codes$steroids$all$bnf[str_length(presc_codes$steroids$all$bnf) == 9] |
+                       substr(bnf_code, 1, 10) %in% presc_codes$steroids$all$bnf[str_length(presc_codes$steroids$all$bnf) == 10]]
 steroids[, c("category", "type") := .("steroids", NA)]
 
 # Statins ----------------------------------------------------------------------
 
-statins <- gp_presc[substr(read_2, 1, 2) %in% presc_codes$statins$read[str_length(presc_codes$statins$read) == 2] |
-                      substr(read_2, 1, 3) %in% presc_codes$statins$read[str_length(presc_codes$statins$read) == 3] |
-                      substr(read_2, 1, 4) %in% presc_codes$statins$read[str_length(presc_codes$statins$read) == 4] |
-                      substr(read_2, 1, 5) %in% presc_codes$statins$read[str_length(presc_codes$statins$read) == 5] |
-                      substr(bnf_code, 1, 4) %in% presc_codes$statins$bnf[str_length(presc_codes$statins$bnf) == 4] |
-                      substr(bnf_code, 1, 6) %in% presc_codes$statins$bnf[str_length(presc_codes$statins$bnf) == 6] |
-                      substr(bnf_code, 1, 7) %in% presc_codes$statins$bnf[str_length(presc_codes$statins$bnf) == 7] |
-                      substr(bnf_code, 1, 9) %in% presc_codes$statins$bnf[str_length(presc_codes$statins$bnf) == 9] |
-                      substr(bnf_code, 1, 10) %in% presc_codes$statins$bnf[str_length(presc_codes$statins$bnf) == 10]]
+statins <- gp_presc[substr(read_2, 1, 2) %in% presc_codes$statins$all$read[str_length(presc_codes$statins$all$read) == 2] |
+                      substr(read_2, 1, 3) %in% presc_codes$statins$all$read[str_length(presc_codes$statins$all$read) == 3] |
+                      substr(read_2, 1, 4) %in% presc_codes$statins$all$read[str_length(presc_codes$statins$all$read) == 4] |
+                      substr(read_2, 1, 5) %in% presc_codes$statins$all$read[str_length(presc_codes$statins$all$read) == 5] |
+                      substr(bnf_code, 1, 4) %in% presc_codes$statins$all$bnf[str_length(presc_codes$statins$all$bnf) == 4] |
+                      substr(bnf_code, 1, 6) %in% presc_codes$statins$all$bnf[str_length(presc_codes$statins$all$bnf) == 6] |
+                      substr(bnf_code, 1, 7) %in% presc_codes$statins$all$bnf[str_length(presc_codes$statins$all$bnf) == 7] |
+                      substr(bnf_code, 1, 9) %in% presc_codes$statins$all$bnf[str_length(presc_codes$statins$all$bnf) == 9] |
+                      substr(bnf_code, 1, 10) %in% presc_codes$statins$all$bnf[str_length(presc_codes$statins$all$bnf) == 10]]
 statins[, c("category", "type") := .("statins", NA)]
 
 # Atypical antipsychotics ------------------------------------------------------
 
 # Records with matching codes
-antipsy <- gp_presc[substr(read_2, 1, 2) %in% presc_codes$antipsy$read[str_length(presc_codes$antipsy$read) == 2] |
-                      substr(read_2, 1, 3) %in% presc_codes$antipsy$read[str_length(presc_codes$antipsy$read) == 3] |
-                      substr(read_2, 1, 4) %in% presc_codes$antipsy$read[str_length(presc_codes$antipsy$read) == 4] |
-                      substr(read_2, 1, 5) %in% presc_codes$antipsy$read[str_length(presc_codes$antipsy$read) == 5] |
-                      substr(bnf_code, 1, 4) %in% presc_codes$antipsy$bnf[str_length(presc_codes$antipsy$bnf) == 4] |
-                      substr(bnf_code, 1, 6) %in% presc_codes$antipsy$bnf[str_length(presc_codes$antipsy$bnf) == 6] |
-                      substr(bnf_code, 1, 7) %in% presc_codes$antipsy$bnf[str_length(presc_codes$antipsy$bnf) == 7] |
-                      substr(bnf_code, 1, 9) %in% presc_codes$antipsy$bnf[str_length(presc_codes$antipsy$bnf) == 9] |
-                      substr(bnf_code, 1, 10) %in% presc_codes$antipsy$bnf[str_length(presc_codes$antipsy$bnf) == 10]]
+antipsy <- gp_presc[substr(read_2, 1, 2) %in% presc_codes$antipsy$all$read[str_length(presc_codes$antipsy$all$read) == 2] |
+                      substr(read_2, 1, 3) %in% presc_codes$antipsy$all$read[str_length(presc_codes$antipsy$all$read) == 3] |
+                      substr(read_2, 1, 4) %in% presc_codes$antipsy$all$read[str_length(presc_codes$antipsy$all$read) == 4] |
+                      substr(read_2, 1, 5) %in% presc_codes$antipsy$all$read[str_length(presc_codes$antipsy$all$read) == 5] |
+                      substr(bnf_code, 1, 4) %in% presc_codes$antipsy$all$bnf[str_length(presc_codes$antipsy$all$bnf) == 4] |
+                      substr(bnf_code, 1, 6) %in% presc_codes$antipsy$all$bnf[str_length(presc_codes$antipsy$all$bnf) == 6] |
+                      substr(bnf_code, 1, 7) %in% presc_codes$antipsy$all$bnf[str_length(presc_codes$antipsy$all$bnf) == 7] |
+                      substr(bnf_code, 1, 9) %in% presc_codes$antipsy$all$bnf[str_length(presc_codes$antipsy$all$bnf) == 9] |
+                      substr(bnf_code, 1, 10) %in% presc_codes$antipsy$all$bnf[str_length(presc_codes$antipsy$all$bnf) == 10]]
 
 # Search drug names for TPP records
 antipsy_addl <- gp_presc[data_provider == 3 & substr(bnf_code, 1, 4) == "0402"]
-antipsy_addl <- antipsy_addl[str_detect(drug_name, regex(paste0("\\b", presc_codes$antipsy$search, "\\b", collapse = "|"), ignore_case = TRUE))]
+antipsy_addl <- antipsy_addl[str_detect(drug_name, regex(paste0("\\b", presc_codes$antipsy$all$search, "\\b", collapse = "|"), ignore_case = TRUE))]
 
 # Finalise records
 antipsy_final <- rbind(antipsy, antipsy_addl)
@@ -78,7 +83,9 @@ antipsy_final[, c("category", "type") := .("antipsychotics", "atypical")]
 
 # Anti-hypertensives -----------------------------------------------------------
 
-hypertension <- lapply(1:length(presc_codes$hypertension), function (i) {
+hypertension_drugs <- names(presc_codes$hypertension)
+hypertension_drugs <- which(hypertension_drugs != "all")
+hypertension <- lapply(hypertension_drugs, function (i) {
   drugs <- presc_codes$hypertension[[i]]
   drug_type <- names(presc_codes$hypertension)[i]
   out <- gp_presc[substr(read_2, 1, 2) %in% drugs$read[str_length(drugs$read) == 2] |
