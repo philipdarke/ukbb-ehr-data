@@ -18,7 +18,7 @@ records <- readRDS(paste0(output_path, "all_records.rds"))
 eids <- intersect(reg_data[, .(n = length(unique(data_provider))), by = eid][n > 1, eid],
                   data_period[period > 1, eid])
 id <- sample(eids, 1)
-pheno_plot(id)
+algo_plot(id)
 
 # Plot participant and save
 algo_plot(id, save = "visualisation/algo_plot.pdf")
