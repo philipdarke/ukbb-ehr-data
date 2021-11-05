@@ -9,7 +9,11 @@ library(ukbbhelpr)
 source("setup.R")
 
 # Load raw secondary care data
-sc_data <- fread(sc_path)
+tryCatch({
+  sc_data <- fread(sc_path)
+}, error = function (e) {
+  message("Hospital episode statistics unavailable. Do not run this script.")
+})
 
 # Extract diagnoses and procedure fields
 sc_data <- visit_fields(sc_data, c(41270:41273, 41280:41283))

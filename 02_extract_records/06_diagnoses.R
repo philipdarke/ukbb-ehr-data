@@ -1,5 +1,8 @@
 # Diagnoses
 # Author: Philip Darke <p.a.darke2@newcastle.ac.uk>
+#
+# Extract diagnoses for diabetes, heart attack/MI, angina, stroke, TIA, PCOS,
+# bipolar, schizophrenia and learning disabilities.
 
 library(data.table)
 library(lubridate)
@@ -10,9 +13,15 @@ source("setup.R")
 participants <- readRDS(paste0(output_path, "participants.rds"))
 gp_event <- readRDS(paste0(output_path, "gp_event.rds"))
 visit_data <- readRDS(paste0(output_path, "visit_data.rds"))
-sc_data <- readRDS(paste0(output_path, "hes_diagnoses.rds"))
 pc_codes <- readRDS(paste0(codeset_path, "primary_care/conditions.rds"))
-sc_codes <- fread(paste0(codeset_path, "secondary_care/diabetes_diagnosis.csv"))
+sc_codes <- readRDS(paste0(codeset_path, "secondary_care/conditions.rds"))
+tryCatch({
+  sc_data <- readRDS(paste0(output_path, "hes_diagnoses.rds"))
+}, error = function (e) {
+  # Handle missing HES data
+  sc_data <- NULL
+})
+
 
 # Self-reported conditions
 sr_data <- visit_conditions(visit_data)
@@ -53,23 +62,28 @@ diabetes_ehr <- diabetes_ehr[,
 
 # C. Secondary care data
 
-# Set unknown diabetes codes to NA
-sc_codes[type == "unknown", type := NA]
-
 # Extract codes
-diabetes_hes <- rbind(merge(sc_data, sc_codes[, -c("icd10")], by = "icd9"),
-                      merge(sc_data, sc_codes[, -c("icd9")], by = "icd10"))
-diabetes_hes <- diabetes_hes[,
-                             .(eid,
-                               date,
-                               source = "hes",
-                               variable = "diabetes",
-                               level = type,
-                               reported = NA_Date_)]
+if (!is.null(sc_data)) {
+  diabetes_hes <- rbind(merge(sc_data, sc_codes[, -c("icd10")], by = "icd9"),
+                        merge(sc_data, sc_codes[, -c("icd9")], by = "icd10"))
+  diabetes_hes <- diabetes_hes[,
+                               .(eid,
+                                 date,
+                                 source = "hes",
+                                 variable = "diabetes",
+                                 value,
+                                 level,
+                                 reported = NA_Date_)]
+}
+
 
 # D. Combine EHR and UK Biobank values
 
-diabetes <- rbind(diabetes_ukbb, diabetes_ehr, diabetes_hes, fill = TRUE)[order(eid, date)]
+if (!is.null(sc_data)) {
+  diabetes <- rbind(diabetes_ukbb, diabetes_ehr, diabetes_hes, fill = TRUE)[order(eid, date)]
+} else {
+  diabetes <- rbind(diabetes_ukbb, diabetes_ehr, fill = TRUE)[order(eid, date)]
+}
 diabetes <- diabetes[, .(eid, date, source, data_provider, variable, level, reported)]
 
 # Heart attack/MI --------------------------------------------------------------
