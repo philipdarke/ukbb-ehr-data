@@ -58,6 +58,9 @@ study_data[, followup := time_length(entry_date %--% censor_date, unit = "years"
 
 # Outcomes ---------------------------------------------------------------------
 
+# Only use outcomes in primary care EHR data
+diagnoses <- diagnoses[source == "ehr"]
+
 # First diabetes disclosure/code of any type
 diagnoses <- merge(diagnoses, study_data[, .(eid, entry_date)], by = "eid")
 diabetes_outcomes <- diagnoses[variable == "diabetes" & date > entry_date,
