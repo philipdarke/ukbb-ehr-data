@@ -21,7 +21,7 @@ biomarkers <- readRDS(paste0(output_path, "biomarkers.rds"))
 family_history <- readRDS(paste0(output_path, "family_history.rds"))
 prescriptions <- readRDS(paste0(output_path, "prescriptions.rds"))
 phenotype <- readRDS(paste0(output_path, "diabetes_phenotype.rds"))
-ehr_presc_codes <- readRDS(paste0(codeset_path, "primary_care/prescriptions.rds"))
+ehr_presc_codes <- readRDS(paste0(codeset_path, "drugs/prescriptions.rds"))
 visit_presc_codes <- fread("coding4.tsv")
 
 # Parameters

@@ -15,7 +15,7 @@ data_period <- readRDS(paste0(output_path, "data_period.rds"))
 diagnoses <- readRDS(paste0(output_path, "diagnoses.rds"))
 prescriptions <- readRDS(paste0(output_path, "prescriptions_raw.rds"))
 visit_presc_codes <- fread("coding4.tsv")
-ehr_presc_codes <- readRDS(paste0(codeset_path, "primary_care/prescriptions.rds"))
+ehr_presc_codes <- readRDS(paste0(codeset_path, "drugs/prescriptions.rds"))
 
 # Select participants registered with GP at first visit
 first_visit <- visit_data[, .(eid, first_visit = `53-0.0`)]
@@ -66,13 +66,13 @@ statin_search <- regex(paste(statin_search, collapse = "|"), ignore_case = TRUE)
 statin_codes <- visit_presc_codes[str_detect(meaning, statin_search), unique(coding)]
 
 # Steroids
-steroid_search <- ehr_presc_codes$steroids$search
+steroid_search <- ehr_presc_codes$steroids$all$search
 steroid_search <- regex(paste(steroid_search, collapse = "|"), ignore_case = TRUE)
 steroid_codes <- visit_presc_codes[str_detect(meaning, steroid_search) &
                                      str_detect(meaning, "eye|ear|cream", negate = TRUE), unique(coding)]
 
 # Atypical anti-psychotics
-antipsy_search <- ehr_presc_codes$antipsy$search
+antipsy_search <- ehr_presc_codes$antipsy$all$search
 antipsy_search <- regex(paste(antipsy_search, collapse = "|"), ignore_case = TRUE)
 antipsy_codes <- visit_presc_codes[str_detect(meaning, antipsy_search), unique(coding)]
 

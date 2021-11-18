@@ -20,7 +20,7 @@ biomarkers <- readRDS(paste0(output_path, "biomarkers.rds"))
 family_history <- readRDS(paste0(output_path, "family_history.rds"))
 prescriptions_raw <- readRDS(paste0(output_path, "prescriptions_raw.rds"))
 phenotype <- readRDS(paste0(output_path, "diabetes_phenotype.rds"))
-ehr_presc_codes <- readRDS(paste0(codeset_path, "primary_care/prescriptions.rds"))
+ehr_presc_codes <- readRDS(paste0(codeset_path, "drugs/prescriptions.rds"))
 visit_presc_codes <- fread("coding4.tsv")
 
 # Parameters
@@ -175,7 +175,7 @@ study_data[, psy := eid %in% psy_eids]
 ster_eids <- prescriptions[category == "steroids", unique(eid)]
 
 # Steroid prescriptions (self-reported)
-steroid_search <- ehr_presc_codes$steroids$search
+steroid_search <- ehr_presc_codes$steroids$all$search
 steroid_search <- regex(paste(steroid_search, collapse = "|"), ignore_case = TRUE)
 steroid_codes <- visit_presc_codes[str_detect(meaning, steroid_search) &
                                      str_detect(meaning, "eye|ear|cream", negate = TRUE), unique(coding)]
@@ -200,7 +200,7 @@ study_data[, stat := eid %in% stat_eids]
 apsy_eids <- prescriptions[category == "antipsychotics" & type == "atypical", unique(eid)]
 
 # Atypical antipsychotic prescriptions (self-reported)
-antipsy_search <- ehr_presc_codes$antipsy$search
+antipsy_search <- ehr_presc_codes$antipsy$all$search
 antipsy_search <- regex(paste(antipsy_search, collapse = "|"), ignore_case = TRUE)
 antipsy_codes <- visit_presc_codes[str_detect(meaning, antipsy_search), unique(coding)]
 apsy_eids <- union(apsy_eids, visit_prescs[date <= entry_date & value %in% antipsy_codes, unique(eid)])  # at study entry
