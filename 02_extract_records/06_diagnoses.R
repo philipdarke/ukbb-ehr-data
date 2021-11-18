@@ -64,8 +64,8 @@ diabetes_ehr <- diabetes_ehr[,
 
 # Extract codes
 if (!is.null(sc_data)) {
-  diabetes_hes <- rbind(merge(sc_data, sc_codes[, -c("icd10")], by = "icd9"),
-                        merge(sc_data, sc_codes[, -c("icd9")], by = "icd10"))
+  diabetes_hes <- rbind(merge(sc_data, sc_codes[variable == "diabetes" & value == "diagnosis", -c("icd10")], by = "icd9"),
+                        merge(sc_data, sc_codes[variable == "diabetes" & value == "diagnosis", -c("icd9")], by = "icd10"))
   diabetes_hes <- diabetes_hes[,
                                .(eid,
                                  date,
