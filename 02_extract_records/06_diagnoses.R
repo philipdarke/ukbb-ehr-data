@@ -15,11 +15,11 @@ gp_event <- readRDS(paste0(output_path, "gp_event.rds"))
 visit_data <- readRDS(paste0(output_path, "visit_data.rds"))
 pc_codes <- readRDS(paste0(codeset_path, "primary_care/conditions.rds"))
 sc_codes <- readRDS(paste0(codeset_path, "secondary_care/conditions.rds"))
-tryCatch({
-  sc_data <- readRDS(paste0(output_path, "hes_diagnoses.rds"))
+sc_data <- tryCatch({
+  readRDS(paste0(output_path, "hes_diagnoses.rds"))
 }, error = function (e) {
   # Handle missing HES data
-  sc_data <- NULL
+  NULL
 })
 
 
