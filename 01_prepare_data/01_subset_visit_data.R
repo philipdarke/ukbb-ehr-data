@@ -25,4 +25,4 @@ required_fields <- c(
 )
 
 # Extract and save
-visit_subset(visit_path_raw, required_fields, visit_path)
+visit_subset(visit_path_raw, required_fields, save = visit_path)
