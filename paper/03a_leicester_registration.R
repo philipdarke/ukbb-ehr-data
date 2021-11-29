@@ -19,7 +19,7 @@ biomarkers <- readRDS(paste0(output_path, "biomarkers.rds"))
 family_history <- readRDS(paste0(output_path, "family_history.rds"))
 prescriptions_raw <- readRDS(paste0(output_path, "prescriptions_raw.rds"))
 ehr_presc_codes <- readRDS(paste0(codeset_path, "drugs/prescriptions.rds"))
-visit_presc_codes <- fread("coding4.tsv")
+visit_presc_codes <- get_coding(4)
 
 # Parameters
 study_length <- 5  # years

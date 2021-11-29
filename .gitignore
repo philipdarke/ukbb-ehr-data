@@ -1,5 +1,6 @@
 # Data/output
 schema
+coding*
 *.csv
 *.tsv
 *.rds

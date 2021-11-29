@@ -14,7 +14,7 @@ registration <- readRDS(paste0(output_path, "gp_reg_raw.rds"))
 data_period <- readRDS(paste0(output_path, "data_period.rds"))
 diagnoses <- readRDS(paste0(output_path, "diagnoses.rds"))
 prescriptions <- readRDS(paste0(output_path, "prescriptions_raw.rds"))
-visit_presc_codes <- fread("coding4.tsv")
+visit_presc_codes <- get_coding(4)
 ehr_presc_codes <- readRDS(paste0(codeset_path, "drugs/prescriptions.rds"))
 
 # Select participants registered with GP at first visit

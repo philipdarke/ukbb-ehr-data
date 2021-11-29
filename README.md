@@ -50,10 +50,9 @@ Prescription records | `gp_scripts.txt`
 
 ## Prepare the data for research
 
-1. Download `coding4.tsv` from [https://biobank.ndph.ox.ac.uk/showcase/coding.cgi?id=4](https://biobank.ndph.ox.ac.uk/showcase/coding.cgi?id=4) and save in the project directory (the same directory as this README.md file).
-2. Update `file_paths.R` with the paths to your downloaded data.
-3. Run the scripts in the `01_prepare_data` directory sequentially to infer periods of data collection for each participant. The results are saved in `data/data_period.rds` by default.
-4. Run the scripts in the `02_extract_records` directory sequentially to extract the files marked * in the table below.
+1. Update `file_paths.R` with the paths to your downloaded data.
+2. Run the scripts in the `01_prepare_data` directory sequentially to infer periods of data collection for each participant. The results are saved in `data/data_period.rds` by default.
+3. Run the scripts in the `02_extract_records` directory sequentially to extract the files marked * in the table below.
 
 Alternatively, `run_all.R` can be run instead of steps 3 and 4.
 
