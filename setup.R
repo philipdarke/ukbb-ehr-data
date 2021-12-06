@@ -125,6 +125,27 @@ conv_hba1c <- function (value, out_unit = "ifcc") {
   out
 }
 
+#' Get formatted diagnoses
+#'
+#' @param sr_data Self-reported data.
+#' @param codes Codes for condition (see https://biobank.ndph.ox.ac.uk/showcase/coding.cgi?id=6).
+#' @param variable Name for variable column.
+#' @param level Optional name for level column (default NA).
+#'
+#' @return Formatted data table.
+#' 
+#' @export
+#'
+get_condition <- function (sr_data, codes, variable, level = NA) {
+  sr_data[condition %in% codes,
+          .(eid,
+            date,
+            source = "ukbb",
+            variable = variable,
+            level = level,
+            reported)]
+}
+
 #' Identify periods of medication from prescription records
 #'
 #' @param data Data table with eid = participant identifier and
