@@ -38,4 +38,3 @@ tryCatch({
 }, error = function (e) {
   message("Hospital episode statistics unavailable.")
 })
-

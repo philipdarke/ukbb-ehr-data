@@ -58,7 +58,7 @@ Alternatively, `run_all.R` can be run instead of steps 3 and 4.
 
 :warning: The EHR data are large files and `run_all.R` in particular is very memory intensive. Use of a high performance computing service is recommended. UK Biobank data must be stored and processed as required under the Material Transfer Agreement.
 
-Tested with the September 2019 interim EHR release on an Intel Xeon E5-2699 v4 processor (2.2 GHz, 22 cores, 55 MB cache) with 256Gb RAM running R 3.6. The code has not been tested on R 4.0.
+Tested with the September 2019 interim EHR release on an Intel Xeon E5-2699 v4 processor (2.2 GHz, 22 cores, 55 MB cache) with 256Gb RAM running R 3.6 on CentOS Linux 7. The code has not been tested on R 4.0+.
 
 ## Output summary
 
