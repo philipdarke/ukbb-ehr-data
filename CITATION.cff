@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Darke"
+  given-names: "Philip"
+  orcid: "https://orcid.org/0000-0002-9033-2767"
+- family-names: "Cassidy"
+  given-names: "Sophie"
+  orcid: "https://orcid.org/0000-0002-0228-7274"
+- family-names: "Catt"
+  given-names: "Michael"
+- family-names: "Taylor"
+  given-names: "Roy"
+- family-names: "Missier"
+  given-names: "Paolo"
+- family-names: "Bacardit"
+  given-names: "Jaume"
+  orcid: "https://orcid.org/0000-0002-2692-7205"
+title: "Curating a longitudinal research resource using linked primary care EHR data - a UK Biobank case study"
+version: 1.0.0
+doi: 10.1093/jamia/ocab260
+date-released: 2020-12-13
+url: "https://doi.org/10.1093/jamia/ocab260"
