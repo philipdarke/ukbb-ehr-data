@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "ukbb-ehr-data"
+version = "1.0.0"
+description = "Prepare UK Biobank Electronic Health Record data for research"
+authors = ["Philip Darke <p.a.darke2@newcastle.ac.uk>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pandas = "^1.4.3"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
